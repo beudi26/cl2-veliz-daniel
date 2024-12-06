@@ -49,7 +49,6 @@ public class MaintenanceController {
         return "maintenance-update";
     }
 
-    // Método para convertir la cadena a Date
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm"), true));
@@ -75,37 +74,33 @@ public class MaintenanceController {
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         FilmRegisterDto filmRegisterDto = new FilmRegisterDto(
-                null, // title
-                null, // description
-                null, // releaseYear
-                null, // rentalDuration
-                null, // rentalRate
-                null, // length
-                null, // replacementCost
-                null, // rating
-                null, // specialFeatures
-                null, // lastUpdate
-                null, // languageId (o el tipo que uses)
-                null, // anotherField
-                null  // anotherField (si tienes más campos)
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
         );
 
         model.addAttribute("filmRegisterDto", filmRegisterDto);
 
-        // Obtener todos los lenguajes disponibles
         List<Language> languages = maintenanceService.getAllLanguages();
         model.addAttribute("languages", languages);
 
-        // Retornar la vista del formulario de registro
         return "maintenance-register";
     }
 
-    // Registrar el nuevo film
     @PostMapping("/register")
     public String registerFilm(@ModelAttribute FilmRegisterDto filmRegisterDto) {
-        // Registrar el nuevo film usando el DTO
         maintenanceService.registerNewFilm(filmRegisterDto);
-        return "redirect:/maintenance/start"; // Redirigir a la lista de films (o página principal)
+        return "redirect:/maintenance/start";
     }
 
 }

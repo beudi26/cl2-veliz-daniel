@@ -51,9 +51,7 @@
 
 <script>
     function confirmDelete(filmId) {
-        // Mostrar alerta de confirmación
         if (confirm('¿Estás seguro de que quieres eliminar esta película?')) {
-            // Enviar el formulario de eliminación correspondiente
             document.getElementById('deleteForm-' + filmId).submit();
         }
     }

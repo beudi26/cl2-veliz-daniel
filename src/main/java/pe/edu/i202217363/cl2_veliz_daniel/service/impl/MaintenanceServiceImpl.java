@@ -88,7 +88,6 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
         if (optionalFilm.isPresent()) {
             Film film = optionalFilm.get();
-            // Actualizar los campos de la entidad Film
             film.setTitle(filmUpdateDto.title());
             film.setDescription(filmUpdateDto.description());
             film.setReleaseYear(filmUpdateDto.releaseYear());
@@ -100,7 +99,6 @@ public class MaintenanceServiceImpl implements MaintenanceService {
             film.setSpecialFeatures(filmUpdateDto.specialFeatures());
             film.setLastUpdate(filmUpdateDto.lastUpdate());
 
-            // Guardar los cambios en la base de datos
             filmRepository.save(film);
         }
     }
@@ -113,11 +111,9 @@ public class MaintenanceServiceImpl implements MaintenanceService {
         if (optionalFilm.isPresent()) {
             Film film = optionalFilm.get();
 
-            // Eliminar manualmente las filas en la tabla rental relacionadas con la película.
             String deleteRentalsQuery = "DELETE FROM rental WHERE inventory_id IN (SELECT inventory_id FROM inventory WHERE film_id = ?)";
             jdbcTemplate.update(deleteRentalsQuery, filmId);
 
-            // Eliminar la película de la tabla film.
             filmRepository.delete(film);
         } else {
             throw new RuntimeException("Pelicula no encontrada" + filmId);
